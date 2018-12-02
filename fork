@@ -1,0 +1,12 @@
+//parent.js
+const cp = require('child_process');
+const n = cp.fork(`${__dirname}/sub.js`);
+n.on('message', (m) => {
+  console.log('PARENT got message:', m);
+});
+n.send({ hello: 'world' });
+//sub.js
+process.on('message', (m) => {
+  console.log('CHILD got message:', m);
+});
+process.send({ foo: 'bar' });
